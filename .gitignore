@@ -6,3 +6,6 @@
 *.mod.c
 *.o
 *.order
+
+# vscode
+.vscode/
