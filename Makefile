@@ -1,17 +1,10 @@
-# Makefile : makefile of our first driver
+obj-m := module2.o
 
-# if KERNELRELEASE is defined , we ’ ve been invoked from the
-# kernel build system and can use its language .
+KERNEL_DIR = /lib/modules/$(shell uname -r)/build
+PWD = $(shell pwd)
 
-ifneq (${KERNELRELEASE},)
-	obj-m := module1.o
-# Otherwise we were called directly from the command line .
-# Invoke the kernel build system .
-else
-	KERNEL_SOURCE := /usr/src/linux-headers-$(shell uname -r)
-	PWD := $(shell pwd)
-default :
-	${MAKE} -C ${KERNEL_SOURCE} SUBDIRS=${PWD} modules
-clean :
-	${MAKE} -C ${KERNEL_SOURCE} SUBDIRS=${PWD} clean
-endif
+default:
+	$(MAKE) -C $(KERNEL_DIR) SUBDIRS=$(PWD) modules
+
+clean:
+	$(MAKE) -C $(KERNEL_DIR) SUBDIRS=$(PWD) clean
