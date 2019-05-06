@@ -1,15 +1,18 @@
-#include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/init.h>
 #include <linux/usb.h>
+#include <linux/hid.h>
+#include <linux/slab.h>
 
 #define AUTHOR_NAME "Matheus Campos da Silva"
-#define DRIVER_DESC "Driver de registro do pen drive de Matheus"
+#define DRIVER_DESC "Driver de registro do mouse de Matheus"
 
 // probe function
 // called on device insertion if and only if no other driver has beat us to the punch
 static int pen_probe(struct usb_interface *interface, const struct usb_device_id *id)
 {
-        printk(KERN_INFO "[*] Pen drive de Matheus (%04X:%04X) plugged\n", id->idVendor, id->idProduct);
+        printk(KERN_INFO "[*] Pen drive de Matheus (%04X:%04X) plugado\n", id->idVendor, id->idProduct);
         return 0; // indicates we will manage this device
 }
 
@@ -21,8 +24,8 @@ static void pen_disconnect(struct usb_interface *interface)
 
 // usb_device_id
 static struct usb_device_id pen_table[] = {
-    // 090c:1000
-    {USB_DEVICE(0x03f0, 0x104a)}, // information is obtained using "lsusb" at the command line
+    // 090c:1000 pen drive duracell
+    {USB_DEVICE(0x090c, 0x1000)}, // information is obtained using "lsusb" at the command line
     {},
 };
 
